@@ -20,3 +20,11 @@ def connect_db():
 if __name__ == '__main__':
 	app.run() 
 
+@app.before_request
+def before_request():
+    g.db = connect_db()
+
+@app.teardown_request
+def teardown_request(exception):
+    g.db.close()
+
